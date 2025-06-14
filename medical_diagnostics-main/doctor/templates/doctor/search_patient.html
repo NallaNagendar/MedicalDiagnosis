@@ -1,0 +1,106 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Search Patient{% endblock %}
+
+{% block content %}
+<style>
+    /* Page Styling */
+    .search-container {
+        background: #ffffff;
+        padding: 20px;
+        margin: 20px auto;
+        max-width: 500px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        font-family: Arial, sans-serif;
+    }
+
+    .search-container h2 {
+        color: #3f51b5;
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 1.8rem;
+    }
+
+    /* Form Styling */
+    .search-container form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .search-container label {
+        margin-bottom: 5px;
+        font-weight: bold;
+        color: #555;
+    }
+
+    .search-container input[type="text"] {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin-bottom: 15px;
+        font-size: 1rem;
+        width: 100%;
+    }
+
+    .search-container input:focus {
+        border-color: #3f51b5;
+        box-shadow: 0 0 5px rgba(63, 81, 181, 0.5);
+        outline: none;
+    }
+
+    .search-container button {
+        background-color: #3f51b5;
+        color: #fff;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1rem;
+        font-weight: bold;
+        width: 100%;
+        transition: background-color 0.3s ease;
+    }
+
+    .search-container button:hover {
+        background-color: #303f9f;
+    }
+
+    /* Patient Details Styling */
+    .patient-details {
+        background: rgba(63, 81, 181, 0.1);
+        padding: 15px;
+        margin-top: 20px;
+        border-radius: 10px;
+    }
+
+    .patient-details h3 {
+        color: #3f51b5;
+        margin-bottom: 10px;
+    }
+
+    .patient-details p {
+        font-size: 1rem;
+        margin: 5px 0;
+        color: #333;
+    }
+</style>
+
+<div class="search-container">
+    <h2>Search Patient by Unique ID</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <label for="unique_id">Unique ID:</label>
+        <input type="text" name="unique_id" id="unique_id" required>
+        <button type="submit">Search</button>
+    </form>
+
+    {% if patient %}
+    <div class="patient-details">
+        <h3>Patient Details</h3>
+        <p><strong>Name:</strong> {{ patient.user.username }}</p>
+        <p><strong>Medical History:</strong> {{ patient.medical_history }}</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

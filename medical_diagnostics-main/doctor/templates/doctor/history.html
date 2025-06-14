@@ -1,0 +1,88 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Doctor History{% endblock %}
+
+{% block content %}
+<style>
+    /* General Styling */
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f0f4f8;
+        color: #333;
+        padding: 20px;
+        line-height: 1.6;
+    }
+
+    /* Container for the content */
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        background-color: #ffffff;
+        padding: 2rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Table Styling */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    table th, table td {
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: left;
+    }
+
+    table th {
+        background-color: #004080;
+        color: white;
+        font-size: 1.1rem;
+    }
+
+    table tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    table tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    /* Heading Styling */
+    h2 {
+        color: #004080;
+        margin-bottom: 20px;
+    }
+
+    /* No records message */
+    p {
+        color: #666;
+        font-size: 1.1rem;
+    }
+</style>
+
+<div class="container">
+    <h2>Your Treatment History</h2>
+
+    {% if history %}
+        <table>
+            <tr>
+                <th>Patient</th>
+                <th>Treatment Date</th>
+                <th>Details</th>
+            </tr>
+            {% for record in history %}
+            <tr>
+                <td>{{ record.patient.user.username }}</td>
+                <td>{{ record.treatment_date }}</td>
+                <td>{{ record.details }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No treatment history available.</p>
+    {% endif %}
+</div>
+{% endblock %}

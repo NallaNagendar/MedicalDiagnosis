@@ -1,0 +1,101 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Patient Dashboard{% endblock %}
+
+{% block content %}
+<style>
+    /* Dashboard Container */
+    .dashboard-container {
+        max-width: 800px;
+        margin: 30px auto;
+        padding: 20px;
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        font-family: Arial, sans-serif;
+    }
+
+    .dashboard-container h2 {
+        color: #3f51b5;
+        font-size: 1.8rem;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .dashboard-container a {
+        display: inline-block;
+        margin: 10px 0;
+        padding: 10px 15px;
+        background-color: #3f51b5;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+        font-size: 1rem;
+        transition: background-color 0.3s ease;
+    }
+
+    .dashboard-container a:hover {
+        background-color: #303f9f;
+    }
+
+    /* Appointments Table */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        font-size: 1rem;
+        text-align: left;
+    }
+
+    table th,
+    table td {
+        padding: 10px 15px;
+        border: 1px solid #ccc;
+    }
+
+    table th {
+        background-color: #3f51b5;
+        color: #ffffff;
+        font-weight: bold;
+    }
+
+    table tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    table tr:hover {
+        background-color: rgba(63, 81, 181, 0.1);
+    }
+
+    table td {
+        color: #333;
+    }
+</style>
+
+<div class="dashboard-container">
+    <h2>Welcome, {{ request.user.username }}</h2>
+
+    <!-- Quick Links -->
+    <p><a href="{% url 'patient:book_appointment' %}">Book an Appointment</a></p>
+    <p><a href="{% url 'patient:upload_medical_records' %}">Upload Medical Records</a></p>
+    
+
+    <!-- Appointments Table -->
+    <h3>Your Appointments</h3>
+    <table>
+        <tr>
+            <th>Doctor</th>
+            <th>Appointment Date</th>
+            <th>Status</th>
+        </tr>
+        {% for appointment in appointments %}
+        <tr>
+            <td>{{ appointment.doctor.user.username }}</td>
+            <td>{{ appointment.appointment_date }}</td>
+            <td>{{ appointment.status }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}
