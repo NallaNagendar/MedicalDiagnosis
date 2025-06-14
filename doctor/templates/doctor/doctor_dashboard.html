@@ -1,0 +1,70 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Doctor Dashboard{% endblock %}
+
+{% block content %}
+<style>
+    /* Container for the dashboard */
+    .dashboard-container {
+        max-width: 900px;
+        margin: 30px auto;
+        padding: 20px;
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        font-family: Arial, sans-serif;
+    }
+
+    .dashboard-container h2 {
+        color: #3f51b5;
+        font-size: 2rem;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .dashboard-container p {
+        font-size: 1.2rem;
+        color: #333;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    /* Links styling for dashboard options */
+    .dashboard-container a {
+        display: inline-block;
+        background-color: #3f51b5;
+        color: white;
+        padding: 12px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+        font-size: 1.1rem;
+        margin: 10px 0;
+        width: 100%;
+        text-align: center;
+        transition: background-color 0.3s, transform 0.3s ease;
+    }
+
+    .dashboard-container a:hover {
+        background-color: #283593;
+        transform: scale(1.05);
+    }
+
+    /* Responsive design for smaller screens */
+    @media (max-width: 600px) {
+        .dashboard-container a {
+            font-size: 1rem;
+            padding: 10px 15px;
+            width: 100%;
+        }
+    }
+</style>
+
+<div class="dashboard-container">
+    <h2>Welcome, Dr. {{ request.user.username }}</h2>
+
+    <p><a href="{% url 'doctor:manage_appointments' %}">Manage Appointments</a></p>
+    <p><a href="{% url 'doctor:doctor_history' %}">View Your Treatment History</a></p>
+    <p><a href="{% url 'doctor:search_patient' %}">Search for Patient</a></p>
+</div>
+
+{% endblock %}

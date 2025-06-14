@@ -1,0 +1,126 @@
+{% extends 'base/base.html' %}
+
+{% block title %}View Appointments{% endblock %}
+
+{% block content %}
+<style>
+    /* Container for the entire content */
+    .appointments-container {
+        max-width: 900px;
+        margin: 30px auto;
+        padding: 20px;
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        font-family: Arial, sans-serif;
+    }
+
+    .appointments-container h2 {
+        color: #3f51b5;
+        font-size: 2rem;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .appointments-container h3 {
+        color: #3f51b5;
+        font-size: 1.6rem;
+        margin-bottom: 15px;
+    }
+
+    /* Table Styling */
+    .appointments-container table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    .appointments-container table th, .appointments-container table td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .appointments-container table th {
+        background-color: #3f51b5;
+        color: white;
+        font-size: 1.1rem;
+    }
+
+    .appointments-container table tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    .appointments-container table tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    .appointments-container table a {
+        color: #3f51b5;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .appointments-container table a:hover {
+        text-decoration: underline;
+    }
+
+    /* No Appointments Message */
+    .appointments-container p {
+        text-align: center;
+        font-size: 1.2rem;
+        color: #555;
+    }
+</style>
+
+<div class="appointments-container">
+    <h2>Appointments</h2>
+
+    {% if is_doctor %}
+        <h3>Doctor's Appointments</h3>
+        {% if appointments %}
+            <table>
+                <tr>
+                    <th>Patient</th>
+                    <th>Appointment Date</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+                {% for appointment in appointments %}
+                <tr>
+                    <td>{{ appointment.patient.user.username }}</td>
+                    <td>{{ appointment.appointment_date }}</td>
+                    <td>{{ appointment.status }}</td>
+                    <td>
+                        <a href="{% url 'appointments:manage_appointments' appointment.id %}">Manage Appointment</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <p>No appointments.</p>
+        {% endif %}
+    {% else %}
+        <h3>Patient's Appointments</h3>
+        {% if appointments %}
+            <table>
+                <tr>
+                    <th>Doctor</th>
+                    <th>Appointment Date</th>
+                    <th>Status</th>
+                </tr>
+                {% for appointment in appointments %}
+                <tr>
+                    <td>{{ appointment.doctor.user.username }}</td>
+                    <td>{{ appointment.appointment_date }}</td>
+                    <td>{{ appointment.status }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <p>No appointments.</p>
+        {% endif %}
+    {% endif %}
+</div>
+
+{% endblock %}
